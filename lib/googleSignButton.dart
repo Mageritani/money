@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:money/googleSignIn.dart';
+
+import 'home.dart';
 
 class GoogleSignIn extends StatefulWidget {
   const GoogleSignIn({super.key});
@@ -11,7 +15,22 @@ class _GoogleSignInState extends State<GoogleSignIn> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: () async {
+        try{
+        await SignInWithGoogle();
+        if (FirebaseAuth.instance.currentUser != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => Home()),
+          );
+        }
+      } catch (e) {
+      print("登入失敗: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("登入失敗，請再試一次 QQ")),
+      );
+    }
+      },
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,

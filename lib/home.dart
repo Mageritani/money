@@ -1,20 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:money/settingPage.dart';
 
 import 'InfoCard.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
 
+
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  final User = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body:SafeArea(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -22,37 +27,42 @@ class _HomeState extends State<Home> {
               Row(
                 children: [
                   GestureDetector(
-                    onTap: (){},
+                    onTap: () {},
                     child: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
                         color: Colors.white38,
                         shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10)
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(Icons.menu,color: Colors.white,),
+                      child: Icon(Icons.menu, color: Colors.white),
                     ),
                   ),
-                  SizedBox(width: 8,),
-                  Text("Hi ! ",style: TextStyle(color: Colors.white),),
+                  SizedBox(width: 8),
+                  Text("Hi !  ${User?.displayName ?? "Nigga"}", style: TextStyle(color: Colors.white,fontSize: 30)),
                   Spacer(),
                   GestureDetector(
-                    onTap: (){},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Setting()),
+                      );
+                    },
                     child: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                          color: Colors.white38,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(10)
+                        color: Colors.white38,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                       child: Icon(Icons.settings,color: Colors.white,),
+                      child: Icon(Icons.settings, color: Colors.white),
                     ),
                   ),
                 ],
               ),
-              Container()
+              Container(),
             ],
           ),
         ),
