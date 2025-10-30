@@ -1,10 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:money/home.dart';
 import 'package:money/login.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -32,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -48,10 +54,17 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) =>  Login()),
-      );
+      if(user != null){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) =>  Home()),
+        );
+      }else{
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) =>  Login()),
+        );
+      }
     });
   }
 

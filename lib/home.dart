@@ -29,8 +29,8 @@ class _HomeState extends State<Home> {
                   GestureDetector(
                     onTap: () {},
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white38,
                         shape: BoxShape.rectangle,
@@ -40,18 +40,18 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   SizedBox(width: 8),
-                  Text("Hi !  ${User?.displayName ?? "Nigga"}", style: TextStyle(color: Colors.white,fontSize: 30)),
+                  Text("Hi !  ${User?.displayName ?? "Nigga"}", style: TextStyle(color: Colors.white,fontSize: 20)),
                   Spacer(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => Setting()),
+                        MaterialPageRoute(builder: (_) =>  Setting()),
                       );
                     },
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white38,
                         shape: BoxShape.rectangle,
@@ -62,7 +62,29 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-              Container(),
+              Container(
+                height: 200,
+                decoration: BoxDecoration(),
+                child: Column(
+                  children: [
+                    Text("剩餘總額：",style: TextStyle(color: Colors.white),),
+                    Text("1000,000",style: TextStyle(color: Colors.white,fontSize: 30),)
+                  ],
+                ),
+              ),
+              SizedBox(height: 20,),
+              Container(
+                width: double.infinity,
+                height: 300,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: SingleChildScrollView(
+                  child: Column(),
+                ),
+              ),
             ],
           ),
         ),

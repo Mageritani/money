@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money/googleSignIn.dart';
 import 'package:money/home.dart';
 
 class Setting extends StatefulWidget {
@@ -28,8 +29,8 @@ class _SettingState extends State<Setting> {
                       );
                     },
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white38,
                         shape: BoxShape.rectangle,
@@ -41,14 +42,36 @@ class _SettingState extends State<Setting> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 30),
                   Text(
                     "Setting",
                     style: TextStyle(color: Colors.white, fontSize: 30),
                   ),
                 ],
               ),
-              Container(),
+              SizedBox(height: 20,),
+              Container(
+                width: double.infinity,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: GestureDetector(
+                  onTap: () => GoogleSignOut(context),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Icon(Icons.login,color: Colors.white,size: 20,),
+                        SizedBox(width: 10,),
+                        Text("Sign Out",style: TextStyle(color: Colors.white,fontSize: 30),)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

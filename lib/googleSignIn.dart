@@ -14,5 +14,12 @@ Future<UserCredential> SignInWithGoogle() async {
   );
 
   return await FirebaseAuth.instance.signInWithCredential(googleCredential);
+}
 
+Future<void> GoogleSignOut(BuildContext context) async {
+  await GoogleSignIn().signOut();
+  await FirebaseAuth.instance.signOut();
+  if(context.mounted){
+    Navigator.pushReplacementNamed(context, '/');
+  }
 }

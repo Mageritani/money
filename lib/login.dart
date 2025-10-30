@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:money/facebookSignButton.dart';
 import 'package:money/googleSignButton.dart';
 import 'package:money/home.dart';
 
@@ -109,7 +108,6 @@ class _LoginState extends State<Login> {
                         children: [
                           GoogleSignIn(),
                           SizedBox(width: 10,),
-                          FaceBookSignIn()
                         ],
                       ),
                     ],
