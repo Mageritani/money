@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class BottomNavItem extends StatefulWidget {
-  const BottomNavItem({super.key});
+class BottomNavItem extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) onItemSelected;
 
-  @override
-  State<BottomNavItem> createState() => _BottomNavItemState();
-}
-
-class _BottomNavItemState extends State<BottomNavItem> {
-  int selectedIndex = 0;
+  const BottomNavItem({
+    super.key,
+    required this.selectedIndex,
+    required this.onItemSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +41,7 @@ class _BottomNavItemState extends State<BottomNavItem> {
   Widget _buildNavItem(IconData icon, int index) {
     bool isSelected = selectedIndex == index;
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedIndex = index;
-        });
-      },
+      onTap: () => onItemSelected(index),
       child: Icon(
         icon,
         color: isSelected ? Colors.white : Colors.white70,

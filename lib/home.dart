@@ -14,6 +14,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final User = FirebaseAuth.instance.currentUser;
+  int _selectIndex = 0;
+
+  final List<Widget> _pages = [Home(), CardList(), History(), Setting()];
 
   @override
   Widget build(BuildContext context) {
@@ -81,22 +84,17 @@ class _HomeState extends State<Home> {
               SizedBox(height: 20),
               Expanded(
                 // 改用 Expanded
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      // 你的內容
-                    ),
-                  ),
-                ),
+                child: _pages[_selectIndex],
               ),
               SizedBox(height: 16), // 給底部導航留空間
-              BottomNavItem(), // 現在會顯示了
+              BottomNavItem(
+                selectedIndex: _selectIndex,
+                onItemSelected: (index) {
+                  setState(() {
+                    _selectIndex = index;
+                  });
+                },
+              ), // 現在會顯示了
             ],
           ),
         ),
