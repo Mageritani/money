@@ -3,15 +3,21 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:money/home.dart';
 import 'package:money/login.dart';
+import 'package:money/theme/theme.dart';
+import 'package:money/theme/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform);
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +27,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  SplashScreen(),
+      home: const SplashScreen(),
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }
@@ -48,21 +55,20 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 1),
     );
 
-    _animation =
-        CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
 
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 2), () {
-      if(user != null){
+      if (user != null) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) =>  Home()),
+          MaterialPageRoute(builder: (_) => Home()),
         );
-      }else{
+      } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) =>  Login()),
+          MaterialPageRoute(builder: (_) => Login()),
         );
       }
     });
@@ -84,11 +90,7 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                "assets/mm.png",
-                width: 200,
-                height: 200,
-              ),
+              Image.asset("assets/mm.png", width: 200, height: 200),
               Text(
                 "Let's save your money",
                 style: TextStyle(

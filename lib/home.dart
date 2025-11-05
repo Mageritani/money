@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:money/bottomNavItem.dart';
+import 'package:money/cardList.dart';
+import 'package:money/history.dart';
 import 'package:money/settingPage.dart';
-
-import 'InfoCard.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,12 +16,12 @@ class _HomeState extends State<Home> {
   final User = FirebaseAuth.instance.currentUser;
   int _selectIndex = 0;
 
-  final List<Widget> _pages = [Home(), CardList(), History(), Setting()];
+  final List<Widget> _pages = [Home(), Cardlist(), History(), Setting()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -35,17 +35,23 @@ class _HomeState extends State<Home> {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.white38,
+                        color: Theme.of(context).colorScheme.primary,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(Icons.menu, color: Colors.white),
+                      child: Icon(
+                        Icons.menu,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                   SizedBox(width: 8),
                   Text(
                     "Hi !  ${User?.displayName ?? "User"}",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 20,
+                    ),
                   ),
                   Spacer(),
                   GestureDetector(
@@ -59,11 +65,14 @@ class _HomeState extends State<Home> {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.white38,
+                        color: Theme.of(context).colorScheme.primary,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(Icons.settings, color: Colors.white),
+                      child: Icon(
+                        Icons.settings,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ],
@@ -73,10 +82,18 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(),
                 child: Column(
                   children: [
-                    Text("剩餘總額：", style: TextStyle(color: Colors.white)),
+                    Text(
+                      "剩餘總額：",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     Text(
                       "1,000,000",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontSize: 30,
+                      ),
                     ),
                   ],
                 ),
