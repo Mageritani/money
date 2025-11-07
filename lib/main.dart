@@ -13,10 +13,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: const MyApp(),
-    ),
+    const MyApp(),
+    // ChangeNotifierProvider(
+    //   create: (context) => ThemeProvider(),
+    //   child: const MyApp(),
+    // ),
   );
 }
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
-      theme: Provider.of<ThemeProvider>(context).themeData,
+      // theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }
@@ -74,11 +75,15 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
+
+  
 
   @override
   Widget build(BuildContext context) {

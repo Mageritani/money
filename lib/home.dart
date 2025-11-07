@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:money/bottomNavItem.dart';
 import 'package:money/cardList.dart';
+import 'package:money/dashboard.dart'; // ✅ 新增
 import 'package:money/history.dart';
 import 'package:money/settingPage.dart';
 
@@ -13,10 +14,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final User = FirebaseAuth.instance.currentUser;
+  final user = FirebaseAuth.instance.currentUser;
   int _selectIndex = 0;
 
-  final List<Widget> _pages = [Home(), Cardlist(), History(), Setting()];
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      const Dashboard(), // ✅ 主頁面
+      const Cardlist(),  // 卡片列表
+      const History(),   // 歷史記錄
+      const Setting(),   // 設定
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +39,18 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
+              // 頂部導航列
               Row(
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      // 可以加入側邊選單功能
+                    },
                     child: Container(
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primary,
-                        shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
@@ -47,7 +61,7 @@ class _HomeState extends State<Home> {
                   ),
                   SizedBox(width: 8),
                   Text(
-                    "Hi !  ${User?.displayName ?? "User"}",
+                    "Hi! ${user?.displayName ?? "User"}",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 20,
@@ -56,17 +70,15 @@ class _HomeState extends State<Home> {
                   Spacer(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => Setting()),
-                      );
+                      setState(() {
+                        _selectIndex = 3; // ✅ Setting 現在是索引 3
+                      });
                     },
                     child: Container(
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primary,
-                        shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
@@ -77,33 +89,13 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(),
-                child: Column(
-                  children: [
-                    Text(
-                      "剩餘總額：",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
-                    Text(
-                      "1,000,000",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 20),
+              // 頁面內容
               Expanded(
-                // 改用 Expanded
                 child: _pages[_selectIndex],
               ),
-              SizedBox(height: 16), // 給底部導航留空間
+              SizedBox(height: 16),
+              // 底部導航
               BottomNavItem(
                 selectedIndex: _selectIndex,
                 onItemSelected: (index) {
@@ -111,7 +103,7 @@ class _HomeState extends State<Home> {
                     _selectIndex = index;
                   });
                 },
-              ), // 現在會顯示了
+              ),
             ],
           ),
         ),

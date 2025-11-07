@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:money/googleSignIn.dart';
-import 'package:money/home.dart';
 import 'package:money/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,111 +13,82 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    
+    // ✅ 直接返回內容，不要用 Scaffold
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Home()),
-                      );
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        Icons.keyboard_backspace,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 30),
-                  Text(
-                    "Setting",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontSize: 30,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Container(
-                width: double.infinity,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: GestureDetector(
-                  onTap: () => GoogleSignOut(context),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.login,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          size: 20,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "Sign Out",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontSize: 30,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Theme Change",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
-                    Switch(
-                      value: themeProvider.isDarkMode,
-                      onChanged: (value) {
-                        themeProvider.toggleTheme();
-                      },
-                    ),
-                  ],
+              Text(
+                "Setting",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontSize: 30,
                 ),
               ),
             ],
           ),
-        ),
+          SizedBox(height: 20),
+          InkWell(
+            onTap: () => GoogleSignOut(context),
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              height: 80,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "Sign Out",
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Theme.of(context).colorScheme.onSurface, // ✅ 加上顏色
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            height: 80,
+            padding: const EdgeInsets.symmetric(horizontal: 20), // ✅ 加上內邊距
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Theme Change",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                Switch(
+                  value: themeProvider.isDarkMode,
+                  onChanged: (value) {
+                    themeProvider.toggleTheme();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
