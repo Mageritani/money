@@ -4,7 +4,7 @@ import 'package:money/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class Setting extends StatefulWidget {
-  const Setting({super.key});
+  Setting({super.key});
 
   @override
   State<Setting> createState() => _SettingState();
@@ -14,7 +14,7 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    
+
     // ✅ 直接返回內容，不要用 Scaffold
     return Padding(
       padding: const EdgeInsets.all(20),

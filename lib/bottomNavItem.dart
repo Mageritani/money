@@ -16,7 +16,7 @@ class BottomNavItem extends StatelessWidget {
       height: 56,
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.blueAccent,
+        color: Colors.black,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(

@@ -9,13 +9,13 @@ class ThemeProvider with ChangeNotifier {
   bool get isDarkMode => _themeData == darkMode; // ✅ 加入這個
 
   void setThemeData(ThemeData themeData) {
-    // ✅ 改名
+    // 改名
     _themeData = themeData;
     notifyListeners();
   }
 
   void toggleTheme() {
-    // ✅ 修正拼字
+    // 修正拼字
     if (_themeData == lightMode) {
       _themeData = darkMode;
     } else {

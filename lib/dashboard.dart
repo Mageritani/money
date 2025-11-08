@@ -2,83 +2,113 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    
-    return Column(
+
+    return Stack(
       children: [
-        // 歡迎訊息
-        Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Text(
-                "歡迎回來！",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20),
-              // 總額顯示
-              Container(
-                padding: EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "剩餘總額",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 16,
-                      ),
+        Column(
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // 可以加入側邊選單功能
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      "NT\$ 1,000,000",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Icon(
+                      Icons.menu,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
-                  ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 30),
-              // 快速操作按鈕
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                SizedBox(width: 20),
+                Spacer(),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  backgroundImage: user?.photoURL != null
+                      ? NetworkImage(user!.photoURL!)
+                      : null,
+                  child: user?.photoURL == null
+                      ? Icon(
+                          Icons.person,
+                          size: 30,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        )
+                      : null,
+                ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Column(
                 children: [
-                  _buildQuickAction(
-                    context,
-                    Icons.add_circle_outline,
-                    "新增",
-                    Colors.green,
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          "剩餘總額",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "NT\$ 1,000,000",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  _buildQuickAction(
-                    context,
-                    Icons.remove_circle_outline,
-                    "支出",
-                    Colors.red,
-                  ),
-                  _buildQuickAction(
-                    context,
-                    Icons.analytics_outlined,
-                    "統計",
-                    Colors.blue,
+                  SizedBox(height: 30),
+                  // 快速操作按鈕
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildQuickAction(
+                        context,
+                        Icons.add_circle_outline,
+                        "新增",
+                        Colors.green,
+                      ),
+                      _buildQuickAction(
+                        context,
+                        Icons.remove_circle_outline,
+                        "支出",
+                        Colors.red,
+                      ),
+                      _buildQuickAction(
+                        context,
+                        Icons.analytics_outlined,
+                        "統計",
+                        Colors.blue,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

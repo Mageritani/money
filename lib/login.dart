@@ -3,7 +3,7 @@ import 'package:money/googleSignButton.dart';
 import 'package:money/home.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -92,23 +92,21 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 8,),
+                      SizedBox(height: 8),
                       Row(
-                          children: [
-                            Expanded(
-                                child: Divider()
-                            ),
-                            Text(" or sign with ",style: TextStyle(color: Colors.white),),
-                            Expanded(
-                                child: Divider()
-                            )]),
-                      SizedBox(height: 8,),
+                        children: [
+                          Expanded(child: Divider()),
+                          Text(
+                            " or sign with ",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Expanded(child: Divider()),
+                        ],
+                      ),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GoogleSignIn(),
-                          SizedBox(width: 10,),
-                        ],
+                        children: [GoogleSignIn(), SizedBox(width: 10)],
                       ),
                     ],
                   ),
