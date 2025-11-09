@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:money/settingPage.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard({super.key});
@@ -18,45 +19,47 @@ class Dashboard extends StatelessWidget {
                   onTap: () {
                     // 可以加入側邊選單功能
                   },
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(
-                      Icons.menu,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  child: Icon(
+                    Icons.menu,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(width: 20),
                 Spacer(),
-                CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  backgroundImage: user?.photoURL != null
-                      ? NetworkImage(user!.photoURL!)
-                      : null,
-                  child: user?.photoURL == null
-                      ? Icon(
-                          Icons.person,
-                          size: 30,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        )
-                      : null,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Setting()),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundImage: user?.photoURL != null
+                        ? NetworkImage(user!.photoURL!)
+                        : null,
+                    child: user?.photoURL == null
+                        ? Icon(
+                            Icons.person,
+                            size: 30,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          )
+                        : null,
+                  ),
                 ),
               ],
             ),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(10),
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.all(30),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.secondary.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(

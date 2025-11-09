@@ -16,35 +16,46 @@ class BottomNavItem extends StatelessWidget {
       height: 56,
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            offset: Offset(0, 20),
-            blurRadius: 20,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.05)
+                : Colors.black.withOpacity(0.1),
+            offset: Offset(0, -2),
+            blurRadius: 8,
+          ),
+          BoxShadow(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.03)
+                : Colors.black.withOpacity(0.15),
+            offset: Offset(0, -8),
+            blurRadius: 24,
           ),
         ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(Icons.home, 0),
-          _buildNavItem(Icons.search, 1),
-          _buildNavItem(Icons.favorite, 2),
-          _buildNavItem(Icons.settings, 3),
+          _buildNavItem(Icons.home, 0, context),
+          _buildNavItem(Icons.search, 1, context),
+          _buildNavItem(Icons.wallet, 2, context),
+          _buildNavItem(Icons.history, 3, context),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, int index) {
+  Widget _buildNavItem(IconData icon, int index, BuildContext context) {
     bool isSelected = selectedIndex == index;
     return GestureDetector(
       onTap: () => onItemSelected(index),
       child: Icon(
         icon,
-        color: isSelected ? Colors.white : Colors.white70,
+        color: isSelected
+            ? Theme.of(context).bottomNavigationBarTheme.selectedItemColor
+            : Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
         size: isSelected ? 28 : 24,
       ),
     );

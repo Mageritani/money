@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      themeMode: ThemeMode.system,
       home: InitializationWrapper(), //  改用包裝器
     );
   }

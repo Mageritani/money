@@ -13,7 +13,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Center(
@@ -23,14 +23,17 @@ class _LoginState extends State<Login> {
               Image.asset("assets/mm.png", width: 100, height: 80),
               Text(
                 "Login",
-                style: TextStyle(color: Colors.white, fontSize: 40),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontSize: 40,
+                ),
               ),
               SizedBox(height: 10),
               Container(
                 width: 400,
                 height: 400,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Theme.of(context).colorScheme.surface,
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
@@ -51,7 +54,9 @@ class _LoginState extends State<Login> {
                         decoration: InputDecoration(
                           hintText: "Type your Email",
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.1),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -63,7 +68,7 @@ class _LoginState extends State<Login> {
                         decoration: InputDecoration(
                           hintText: "Type your Password",
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Theme.of(context).colorScheme.onSurface,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -75,7 +80,9 @@ class _LoginState extends State<Login> {
                         height: 50,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.yellow.shade700,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -88,7 +95,10 @@ class _LoginState extends State<Login> {
                           },
                           child: Text(
                             "Login",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -98,7 +108,9 @@ class _LoginState extends State<Login> {
                           Expanded(child: Divider()),
                           Text(
                             " or sign with ",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                           ),
                           Expanded(child: Divider()),
                         ],
