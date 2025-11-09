@@ -105,7 +105,7 @@ ThemeData darkMode = ThemeData(
       fontWeight: FontWeight.bold,
     ),
     displayMedium: TextStyle(
-      color: Color(0xFFE0E0E0),
+      color: Color.fromARGB(255, 255, 255, 255),
       fontWeight: FontWeight.bold,
     ),
     bodyLarge: TextStyle(color: Color(0xFFBDBDBD)),

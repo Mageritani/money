@@ -39,7 +39,7 @@ class BottomNavItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(Icons.home, 0, context),
-          _buildNavItem(Icons.search, 1, context),
+          _buildNavItem(Icons.add, 1, context),
           _buildNavItem(Icons.wallet, 2, context),
           _buildNavItem(Icons.history, 3, context),
         ],

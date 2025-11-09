@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:money/bottomNavItem.dart';
 import 'package:money/cardList.dart';
-import 'package:money/dashboard.dart'; // ✅ 新增
+import 'package:money/dashboard.dart';
 import 'package:money/history.dart';
-import 'package:money/search.dart';
-import 'package:money/settingPage.dart';
+import 'package:money/add.dart';
 
 class Home extends StatefulWidget {
   Home({super.key});
@@ -24,34 +23,39 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _pages = [
-      Dashboard(), // ✅ 主頁面
-      Search(),
-      Cardlist(), // 卡片列表
-      History(), // 歷史記錄
-    ];
+    _pages = [Dashboard(), Add(), Cardlist(), History()];
   }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, // 透明
+        statusBarColor: Colors.transparent,
         statusBarIconBrightness: Theme.of(context).brightness == Brightness.dark
             ? Brightness.light
             : Brightness.dark,
       ),
     );
+
     return Scaffold(
+      extendBody: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Expanded(child: _pages[_selectIndex]),
-              SizedBox(height: 16),
-              BottomNavItem(
+        bottom: false, // 不為底部添加安全區域，讓導航欄可以貼底
+        child: Stack(
+          children: [
+            // 主內容區域
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: IndexedStack(index: _selectIndex, children: _pages),
+            ),
+
+            // 懸浮的底部導航欄
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: BottomNavItem(
                 selectedIndex: _selectIndex,
                 onItemSelected: (index) {
                   setState(() {
@@ -59,8 +63,8 @@ class _HomeState extends State<Home> {
                   });
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
