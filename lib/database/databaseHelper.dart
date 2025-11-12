@@ -32,7 +32,7 @@ class Databasehelper {
        description TEXT NOT NULL,
        date TEXT NOT NULL,
        iconName TEXT NOT NULL,
-       iconHax TEXT NOT NULL,
+       iconHax TEXT NOT NULL
        )
 """);
   }
@@ -69,7 +69,7 @@ class Databasehelper {
     final db = await database;
     final result = await db.query(
       'transactions',
-      where: "date betrween ? AND ?",
+      where: "date BETWEEN ? AND ?",
       whereArgs: [start.toIso8601String(), end.toIso8601String()],
       orderBy: "date DESC",
     );

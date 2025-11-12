@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class TransactionModel {
   final int? id;
   final String type;

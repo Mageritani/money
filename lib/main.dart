@@ -3,7 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:money/home.dart';
 import 'package:money/login.dart';
-import 'package:money/theme/theme_provider.dart';
+import 'package:money/model/transaction_provider.dart';
+import 'package:money/theme/theme_provider.dart'; // 新增
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -11,8 +12,15 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
-    ChangeNotifierProvider(create: (_) => ThemeProvider(), child: MyApp()),
-  ); // 先啟動 UI，不要等待 Firebase
+    // 使用 MultiProvider 管理多個 Provider
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => TransactionProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,12 +31,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: InitializationWrapper(), //  改用包裝器
+      home: InitializationWrapper(),
     );
   }
 }
 
-// 新增：初始化包裝器
+// 初始化包裝器
 class InitializationWrapper extends StatefulWidget {
   InitializationWrapper({super.key});
 
@@ -65,7 +73,7 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ 顯示錯誤
+    // 顯示錯誤
     if (_hasError) {
       return const Scaffold(
         body: Center(
@@ -74,7 +82,7 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
       );
     }
 
-    // ✅ 等待初始化
+    // 等待初始化
     if (!_isInitialized) {
       return const Scaffold(
         backgroundColor: Colors.black,
@@ -82,12 +90,12 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
       );
     }
 
-    // ✅ 初始化完成，顯示啟動畫面
+    // 初始化完成，顯示啟動畫面
     return SplashScreen();
   }
 }
 
-// ✅ 原本的 SplashScreen 保持不變
+// 啟動畫面
 class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
 
@@ -113,15 +121,22 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
+    // 啟動畫面顯示 2 秒後載入資料並導航
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-      _navigateToNextScreen();
+      _loadDataAndNavigate();
     });
   }
 
-  void _navigateToNextScreen() {
-    final user = FirebaseAuth.instance.currentUser;
+  // 載入交易資料後再導航
+  Future<void> _loadDataAndNavigate() async {
+    // 先載入交易資料
+    await context.read<TransactionProvider>().loadTransactions();
 
+    if (!mounted) return;
+
+    // 檢查使用者登入狀態
+    final user = FirebaseAuth.instance.currentUser;
     Widget destination = user != null ? Home() : Login();
 
     Navigator.of(
